@@ -14,9 +14,9 @@
 
 // -----------------------------------------------------------------------------
 
-const int LISTEN_PORT = 6666;
-const char* FORWARD_HOST = "127.0.0.1";
-const int FORWARD_PORT = 6667;
+int listenPort = 6666;
+char* forwardHost = (char*)"127.0.0.1";
+int forwardPort = 6667;
 
 // -----------------------------------------------------------------------------
 
@@ -26,8 +26,22 @@ int openForwardSocket(int* forwardSocket);
 
 // -----------------------------------------------------------------------------
 
+void processCmdArguments(int argc, char *argv[]) {
+	if(argc != 3 && argc != 4 ) {
+		puts("\nUsage: ./socketServerForwarder LOCAL_PORT REMOTE_HOST [REMOTE_PORT]\n\n");
+		exit(1);
+	}
+	listenPort = atoi(argv[1]);
+	forwardHost = argv[2];
+	if(argc == 4) forwardPort = atoi(argv[3]);
+	else forwardPort = listenPort;
+
+	printf("\n listening on local port %i\n forwarding to %s:%i\n\n", listenPort, forwardHost, forwardPort);
+}
+
 int main(int argc, char *argv[]) {
-	puts("## socketServerForwarder ##\n");
+	puts("## socketServerForwarder ##");
+	processCmdArguments(argc, argv);
 
 	int socket_desc, client_sock, c, *new_sock;
 	struct sockaddr_in server, client;
@@ -38,43 +52,41 @@ int main(int argc, char *argv[]) {
 		printf("Could not create socket");
 		return 1;
 	}
-	puts("Socket created");
+	puts("Server socket created");
 
 	//Prepare the sockaddr_in structure
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
-	server.sin_port = htons( LISTEN_PORT );
+	server.sin_port = htons( listenPort );
 
 	//bind
 	if( bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0) {
-		perror("bind failed. Error");
+		perror("Bind failed. Error");
 		return 1;
 	}
-	puts("bind done");
+	puts("Bind successful");
 
 	//Listen
 	listen(socket_desc , 3);
 
 	//Accept and incoming connection
-	puts("Waiting for incoming connections...");
+	puts("Waiting for incoming connections..");
 	c = sizeof(struct sockaddr_in);
 	while( (client_sock = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c)) ) {
-		puts("Connection accepted");
-
 		// print out remote client IP addr:
 		struct sockaddr_in addr;
     socklen_t addr_size = sizeof(struct sockaddr_in);
     /*int res = */getpeername(client_sock, (struct sockaddr *)&addr, &addr_size);
     char clientip[20];
     strcpy(clientip, inet_ntoa(addr.sin_addr));
-		printf(" remote addr: %s\n", clientip);
+		printf("Accepted connection from: %s\n", clientip);
 
 		pthread_t worker_thread;
 		new_sock = malloc(1);
 		*new_sock = client_sock;
 
 		if( pthread_create( &worker_thread , NULL ,  connection_handler , (void*) new_sock) < 0)	{
-			perror("could not create thread");
+			perror("Could not create thread");
 			return 1;
 		}
 
@@ -141,7 +153,7 @@ void *connection_handler(void *socket_desc) {
 	close(sock2);
 	free(sock2_desc);
 
-	puts("Thread exit");
+	puts("thread exit");
 
 	return 0;
 }
@@ -159,9 +171,9 @@ int openForwardSocket(int *sock) {
 	}
 	puts("Forward socket created");
 
-	server.sin_addr.s_addr = inet_addr(FORWARD_HOST);
+	server.sin_addr.s_addr = inet_addr( forwardHost );
 	server.sin_family = AF_INET;
-	server.sin_port = htons(FORWARD_PORT);
+	server.sin_port = htons( forwardPort );
 
 	//Connect to remote server
 	if (connect(*sock , (struct sockaddr *)&server , sizeof(server)) < 0) {
