@@ -137,9 +137,6 @@ int main(int argc, char *argv[]) {
 
 // -----------------------------------------------------------------------------
 
-/*
- * This will handle connection for each client
- * */
 void *connection_handler(void *socket_desc) {
 	//Get the socket descriptor
 	int sock1 = *(int*)socket_desc;
@@ -214,4 +211,6 @@ int openForwardSocket(int *sock) {
 	}
 
 	puts("Forward socket connected");
+
+	return 0;
 }
