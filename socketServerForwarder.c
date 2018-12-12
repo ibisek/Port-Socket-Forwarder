@@ -28,7 +28,7 @@ int openForwardSocket(int* forwardSocket);
 
 void processCmdArguments(int argc, char *argv[]) {
 	if(argc != 3 && argc != 4 ) {
-		puts("\nUsage: ./socketServerForwarder LOCAL_PORT REMOTE_HOST [REMOTE_PORT]\n\n");
+		puts("\nUsage: ./socketServerForwarder LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]\n\n");
 		exit(1);
 	}
 	listenPort = atoi(argv[1]);
@@ -153,7 +153,7 @@ void *connection_handler(void *socket_desc) {
 	close(sock2);
 	free(sock2_desc);
 
-	puts("thread exit");
+	// puts("thread exit");
 
 	return 0;
 }
