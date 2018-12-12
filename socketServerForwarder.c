@@ -11,12 +11,14 @@
 #include<unistd.h>	//write, close
 #include<pthread.h> //for threading , link with lpthread
 #include <sched.h>	//yield
+#include<netdb.h>	//hostent
 
 // -----------------------------------------------------------------------------
 
-int listenPort = 6666;
-char* forwardHost = (char*)"127.0.0.1";
-int forwardPort = 6667;
+int listenPort = 666;
+// char* forwardAddr = (char*)"127.0.0.1";
+char forwardAddr[100];
+int forwardPort = 667;
 
 // -----------------------------------------------------------------------------
 
@@ -26,18 +28,48 @@ int openForwardSocket(int* forwardSocket);
 
 // -----------------------------------------------------------------------------
 
+int hostnameToIp(char* hostname , char* ip) {
+	struct hostent *he;
+	struct in_addr **addr_list;
+	int i;
+
+	if ( (he = gethostbyname( hostname ) ) == NULL) {
+		// herror("gethostbyname");
+		return 1;
+	}
+
+	addr_list = (struct in_addr **) he->h_addr_list;
+
+	for(i = 0; addr_list[i] != NULL; i++) {
+		strcpy(ip , inet_ntoa(*addr_list[i]) );
+		return 0;
+	}
+
+	return 1;
+}
+
+// -----------------------------------------------------------------------------
+
 void processCmdArguments(int argc, char *argv[]) {
 	if(argc != 3 && argc != 4 ) {
 		puts("\nUsage: ./socketServerForwarder LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]\n\n");
 		exit(1);
 	}
 	listenPort = atoi(argv[1]);
-	forwardHost = argv[2];
+	char* forwardHost = argv[2];
 	if(argc == 4) forwardPort = atoi(argv[3]);
 	else forwardPort = listenPort;
 
-	printf("\n listening on local port %i\n forwarding to %s:%i\n\n", listenPort, forwardHost, forwardPort);
+	int err = hostnameToIp(forwardHost, forwardAddr);
+	if(err) {
+		printf("Could not resolve '%s'", forwardHost);
+		exit(1);
+	}
+
+	printf("\n listening on local port %i\n forwarding to %s:%i\n\n", listenPort, forwardAddr, forwardPort);
 }
+
+// -----------------------------------------------------------------------------
 
 int main(int argc, char *argv[]) {
 	puts("## socketServerForwarder ##");
@@ -171,7 +203,7 @@ int openForwardSocket(int *sock) {
 	}
 	puts("Forward socket created");
 
-	server.sin_addr.s_addr = inet_addr( forwardHost );
+	server.sin_addr.s_addr = inet_addr( forwardAddr );
 	server.sin_family = AF_INET;
 	server.sin_port = htons( forwardPort );
 
