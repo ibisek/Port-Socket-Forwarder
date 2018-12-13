@@ -1,5 +1,8 @@
 /*
-	Multithreaded forwarder.
+	Multithreaded port forwarder.
+
+	@autor ibisek
+	@version 2018-12-12
 */
 
 #include<stdio.h>
