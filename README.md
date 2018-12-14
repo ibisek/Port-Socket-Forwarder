@@ -41,6 +41,7 @@ export PATH=$TOOLCHAIN_DIR/bin:$PATH
 ```
 
 (8) `mipsel-openwrt-linux-gcc -o socketServerForwarder.bin ./socketServerForwarder.c` 
+
 or just run the 
 `crossCompile.sh`
 
