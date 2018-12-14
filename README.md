@@ -4,11 +4,13 @@ Simple threaded socket-based traffic forwarder for usecases one needs to forward
 
 Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-program/](https://electrosome.com/cross-compile-openwrt-c-program/)
 
-## NEXX router
+## NEXX WT3020
+
+[https://openwrt.org/toh/nexx/wt3020](https://openwrt.org/toh/nexx/wt3020)
 
 ### Setup OpenWRT SDK:
 
-(1) `git clone [https://github.com/openwrt/openwrt.git](https://github.com/openwrt/openwrt.git)`
+(1) `git clone https://github.com/openwrt/openwrt.git
 
 (2) `cd openwrt`
 
@@ -39,7 +41,9 @@ export PATH=$TOOLCHAIN_DIR/bin:$PATH
 ```
 
 (8) `mipsel-openwrt-linux-gcc -o socketServerForwarder.bin ./socketServerForwarder.c` 
+or just run the 
+`crossCompile.sh`
 
-Done. Run & enjoy.
+Configure, run & enjoy.
 
 :)
