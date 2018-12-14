@@ -4,29 +4,31 @@ Simple threaded socket-based traffic forwarder for usecases one needs to forward
 
 Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-program/](https://electrosome.com/cross-compile-openwrt-c-program/)
 
-##NEXX router
+## NEXX router
 
-###Setup OpenWRT SDK:
+### Setup OpenWRT SDK:
 
-(1) git clone [https://github.com/openwrt/openwrt.git](https://github.com/openwrt/openwrt.git)
+(1) `git clone [https://github.com/openwrt/openwrt.git](https://github.com/openwrt/openwrt.git)`
 
-(2) cd openwrt
+(2) `cd openwrt`
 
-(3) ./scripts/feeds update -a
+(3) `./scripts/feeds update -a`
 
-(4) ./scripts/feeds install -a
+(4) `./scripts/feeds install -a`
 
-(5) make menuconfig
+(5) `make menuconfig`
+```
   Target system -> MediaTek Ralink MIPS
   Subtarget -> MT7620 based boards
   Target profile -> Nexx WT3020 (8MB)
+```
 
-(6) make
+(6) `make`
 
 
-###Prepare environment
+### Prepare environment
 
-(7) sudo vim /bin/openwrt.config
+(7) `sudo vim /bin/openwrt.config`
 ```
 # Set up paths and environment for cross compiling for openwrt
 export STAGING_DIR=/home/ibisek/wqz/temp/openwrt/staging_dir
@@ -36,12 +38,8 @@ export LD_LIBRARY_PATH=$TOOLCHAIN_DIR/usr/lib
 export PATH=$TOOLCHAIN_DIR/bin:$PATH
 ```
 
-(8) mipsel-openwrt-linux-gcc -o socketServerForwarder.bin ./socketServerForwarder.c 
+(8) `mipsel-openwrt-linux-gcc -o socketServerForwarder.bin ./socketServerForwarder.c` 
 
-Done.
+Done. Run & enjoy.
 
 :)
-
-
-
-(8)
