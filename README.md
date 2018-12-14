@@ -10,7 +10,7 @@ Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-prog
 
 ### Setup OpenWRT SDK:
 
-(1) git clone https://github.com/openwrt/openwrt.git
+(1) `git clone https://github.com/openwrt/openwrt.git`
 
 (2) `cd openwrt`
 
