@@ -33,7 +33,7 @@ Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-prog
 (7) `sudo vim /bin/openwrt.config`
 ```
 # Set up paths and environment for cross compiling for openwrt
-export STAGING_DIR=/home/ibisek/wqz/temp/openwrt/staging_dir
+export STAGING_DIR=/home/ibisek/temp/openwrt/staging_dir
 export TOOLCHAIN_DIR=$STAGING_DIR/toolchain-mipsel_24kc_gcc-7.3.0_musl/
 export LDCFLAGS=$TOOLCHAIN_DIR/usr/lib
 export LD_LIBRARY_PATH=$TOOLCHAIN_DIR/usr/lib
