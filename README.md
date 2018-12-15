@@ -8,7 +8,13 @@ Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-prog
 
 [https://openwrt.org/toh/nexx/wt3020](https://openwrt.org/toh/nexx/wt3020)
 
-### Setup OpenWRT SDK:
+### Usage
+
+`./forwarder LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]` 
+
+### How to compile
+
+#### Setup OpenWRT SDK:
 
 (1) `git clone https://github.com/openwrt/openwrt.git`
 
@@ -28,7 +34,7 @@ Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-prog
 (6) `make`
 
 
-### Prepare environment
+#### Prepare environment
 
 (7) `sudo vim /bin/openwrt.config`
 ```
