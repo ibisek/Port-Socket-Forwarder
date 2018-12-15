@@ -2,13 +2,19 @@
 
 Simple threaded socket-based traffic forwarder for usecases one needs to forward traffic from one machine:port to another one:port in specific environments.
 
-Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-program/](https://electrosome.com/cross-compile-openwrt-c-program/)
-
 ## NEXX WT3020
 
 [https://openwrt.org/toh/nexx/wt3020](https://openwrt.org/toh/nexx/wt3020)
 
-### Setup OpenWRT SDK:
+### Usage
+
+`./forwarder.bin LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]` 
+
+### COMPILATION
+
+Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-program/](https://electrosome.com/cross-compile-openwrt-c-program/)
+
+#### Setup OpenWRT SDK:
 
 (1) `git clone https://github.com/openwrt/openwrt.git`
 
@@ -28,7 +34,7 @@ Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-prog
 (6) `make`
 
 
-### Prepare environment
+#### Prepare environment
 
 (7) `sudo vim /bin/openwrt.config`
 ```
