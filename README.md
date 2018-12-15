@@ -8,7 +8,7 @@ Simple threaded socket-based traffic forwarder for usecases one needs to forward
 
 ### Usage
 
-`./forwarder.bin LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]` 
+`./portForwarder.bin LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]` 
 
 ### COMPILATION
 
