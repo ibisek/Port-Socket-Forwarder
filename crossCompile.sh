@@ -8,9 +8,9 @@ rm -f ./socketServerForwarder-stripped
 . /bin/openwrt.config 
 
 # compile:
-mipsel-openwrt-linux-gcc ./socketServerForwarder.c -o forwarder.bin -O3
+mipsel-openwrt-linux-gcc ./socketServerForwarder.c -o portForwarder.bin -O3
 
 # strip the binary:
-mipsel-openwrt-linux-strip ./forwarder.bin -o forwarder-stripped.bin 
+mipsel-openwrt-linux-strip ./portForwarder.bin -o portForwarder-stripped.bin 
 
 

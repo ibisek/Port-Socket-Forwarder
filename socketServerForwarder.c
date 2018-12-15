@@ -55,7 +55,7 @@ int hostnameToIp(char* hostname , char* ip) {
 
 void processCmdArguments(int argc, char *argv[]) {
 	if(argc != 3 && argc != 4 ) {
-		puts("\nUsage: ./socketServerForwarder LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]\n\n");
+		puts("\nUsage: ./portForwarder.bin LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]\n\n");
 		exit(1);
 	}
 	listenPort = atoi(argv[1]);
