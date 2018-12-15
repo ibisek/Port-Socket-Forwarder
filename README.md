@@ -10,9 +10,9 @@ Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-prog
 
 ### Usage
 
-`./forwarder LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]` 
+`./forwarder.bin LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]` 
 
-### How to compile
+### Compilation
 
 #### Setup OpenWRT SDK:
 
