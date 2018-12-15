@@ -10,7 +10,7 @@ Simple threaded socket-based traffic forwarder for usecases one needs to forward
 
 `./forwarder.bin LOCAL_PORT REMOTE_IP_ADDR [REMOTE_PORT]` 
 
-### Compilation
+### COMPILATION
 
 Cross compilation based on [https://electrosome.com/cross-compile-openwrt-c-program/](https://electrosome.com/cross-compile-openwrt-c-program/)
 
