@@ -24,6 +24,11 @@ int listenPort = 666;
 char forwardAddr[100];
 int forwardPort = 667;
 
+const useconds_t SLEEP_DURATION_MIN = 10;
+const useconds_t SLEEP_DURATION_MAX = 400;
+const useconds_t SLEEP_DURATION_INCREMENT = 10;
+useconds_t sleepDuration = 200;
+
 // -----------------------------------------------------------------------------
 
 // forward declarations:
@@ -146,6 +151,7 @@ void *connection_handler(void *socket_desc) {
 	int sock1 = *(int*)socket_desc;
 	int read_size;
 	char dataBuffer[2048];
+	long bytesTransferred;
 
 	int *sock2_desc;
 	sock2_desc = malloc(1);
@@ -154,10 +160,13 @@ void *connection_handler(void *socket_desc) {
 
 	bool doRun = true;
 	while( doRun ) {
+		bytesTransferred = 0;
+
 		// read from sock1:
 		read_size = recv(sock1 , dataBuffer , 2000 , MSG_DONTWAIT);	// non-blocking read
 		if( read_size > 0) {
 			write(sock2, dataBuffer , read_size);	//forward the message
+			bytesTransferred += read_size;
 		} else if (read_size == 0) {
 			puts("Client disconnected");
 			fflush(stdout);
@@ -170,6 +179,7 @@ void *connection_handler(void *socket_desc) {
 		read_size = recv(sock2 , dataBuffer , 2000 , MSG_DONTWAIT);	// non-blocking read
 		if( read_size > 0) {
 			write(sock1, dataBuffer , read_size);	//forward the message back
+			bytesTransferred += read_size;
 		} else if (read_size == 0) {
 			puts("Forward disconnected");
 			fflush(stdout);
@@ -179,7 +189,11 @@ void *connection_handler(void *socket_desc) {
 		}
 
 		sched_yield();
-		usleep(40);	// [us]
+
+		// dynamic sleep duration based on transfered bytes:
+		if(bytesTransferred == 0 && sleepDuration < SLEEP_DURATION_MAX) sleepDuration += SLEEP_DURATION_INCREMENT;
+		else sleepDuration = SLEEP_DURATION_MIN;
+		usleep(sleepDuration);	// [us]
 	}
 
 	close(sock1);
