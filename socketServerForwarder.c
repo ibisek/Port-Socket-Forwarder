@@ -15,6 +15,7 @@
 #include<pthread.h> //for threading , link with lpthread
 #include <sched.h>	//yield
 #include<netdb.h>	//hostent
+#include <unistd.h>	// sleep
 
 // -----------------------------------------------------------------------------
 
@@ -178,6 +179,7 @@ void *connection_handler(void *socket_desc) {
 		}
 
 		sched_yield();
+		usleep(40);	// [us]
 	}
 
 	close(sock1);
