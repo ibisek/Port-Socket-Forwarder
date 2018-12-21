@@ -24,8 +24,8 @@ int listenPort = 666;
 char forwardAddr[100];
 int forwardPort = 667;
 
-const useconds_t SLEEP_DURATION_MIN = 10;
-const useconds_t SLEEP_DURATION_MAX = 400;
+const useconds_t SLEEP_DURATION_MIN = 100;
+const useconds_t SLEEP_DURATION_MAX = 1000;
 const useconds_t SLEEP_DURATION_INCREMENT = 10;
 useconds_t sleepDuration = 200;
 
